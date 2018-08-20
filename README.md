@@ -14,6 +14,6 @@ cat source/* > ~/.pbpprc
 include above file in your rc file. ( e.g `~/.bashrc` `~/.zshrc` )
 
 ```diff
-+ source ~/.pb4hmrc
++ source ~/.pbpprc
 ```
 

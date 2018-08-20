@@ -1,5 +1,0 @@
-function pbcopy_from_file (){
-  echo -n $(cat "$1" | peco) | pbcopy
-}
-alias pbcicat=pbcopy_from_file
-
