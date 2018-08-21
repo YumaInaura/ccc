@@ -1,19 +1,19 @@
-# Paste Board For Human
+# Comfortable Console Control
 
 ## Usage
 
 ```
-git clone https://github.com/YumaInaura/pbpp
+git clone https://github.com/YumaInaura/ccc
+cd ccc
 ```
 
 ```
-cd pbpp
-cat source/* > ~/.pbpprc
+cat source/* > ~/.ccc
 ```
 
 include above file in your rc file. ( e.g `~/.bashrc` `~/.zshrc` )
 
 ```diff
-+ source ~/.pbpprc
++ source ~/.ccc
 ```
 
