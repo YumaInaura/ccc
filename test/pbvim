@@ -1,0 +1,16 @@
+#!/bin/bash -eu
+
+# mock vim command
+function vim () {
+  echo 'a b c' > ./.pbvim.tmp
+}
+
+source ./source/pbvim
+pbvim
+
+if [ "$(pbpaste)" = "a b c" ]; then
+  echo [OK] pbpaste result is "$(pbpaste)"
+else
+  echo [NG] pbpaste result is "$(pbpaste)"
+fi
+

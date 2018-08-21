@@ -1,0 +1,11 @@
+#!/bin/bash -eu
+
+function pbvim (){
+  readonly pbvim_tmp_file=./.pbvim.tmp
+
+  pbpaste | vim - +"saveas $pbvim_tmp_file"
+  cat "$pbvim_tmp_file" | pbcopy
+
+  rm -f "$pbvim_tmp_file"
+}
+
