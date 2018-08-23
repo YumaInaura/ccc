@@ -33,6 +33,9 @@ Put script to your $PATH if you want.
 And you be able to use command anytime.
 
 ```
-cp /exe/pbmake /usr/bin/local
+mkdir /usr/local/bin/source
+cp source/pbmake /usr/local/bin/source/pbmake
+cp exe/pbmake /usr/bin/local
 ```
 
+( I will improve how to instllation... )
