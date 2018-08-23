@@ -2,18 +2,37 @@
 
 ## Usage
 
+### Preparing
+
 ```
 git clone https://github.com/YumaInaura/ccc
 cd ccc
 ```
 
+### Once execute
+
+Once directly execute.
+No change your environments.
+
 ```
-cat source/* > ~/.ccc
+exe/pbmake
 ```
 
-include above file in your rc file. ( e.g `~/.bashrc` `~/.zshrc` )
+### Add to profile
 
-```diff
-+ source ~/.ccc
+Add source to your rc file ( e.g ~/.zshrc ~/.bashrc )
+( Becareful dupulicated Adding  )
+
+```
+cat source/pbmake >> ~/.zshrc
+```
+
+### Resiter as command
+
+Put script to your $PATH if you want.
+And you be able to use command anytime.
+
+```
+cp /exe/pbmake /usr/bin/local
 ```
 

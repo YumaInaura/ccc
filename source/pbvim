@@ -1,5 +1,3 @@
-#!/bin/bash -eu
-
 function pbvim (){
   readonly pbvim_tmp_file=./.pbvim.tmp
 
