@@ -15,7 +15,7 @@ Once directly execute.
 No change your environments.
 
 ```
-exe/pbmake
+bin/pbmake
 ```
 
 ### Add to profile
@@ -35,7 +35,7 @@ And you be able to use command anytime.
 ```
 mkdir /usr/local/bin/source
 cp source/pbmake /usr/local/bin/source/pbmake
-cp exe/pbmake /usr/bin/local
+cp bin/pbmake /usr/bin/local
 ```
 
 ( I will improve how to instllation... )
