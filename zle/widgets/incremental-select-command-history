@@ -10,6 +10,8 @@ incremental-select-command-history() {
       peco --layout=bottom-up --on-cancel=error
    )
 
+   zle reset-prompt
+
    # Keep original input when escape from select
    if [ -z "$BUFFER" ]; then
      BUFFER="$original_buffer"
