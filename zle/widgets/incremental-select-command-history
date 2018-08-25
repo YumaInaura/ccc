@@ -20,3 +20,6 @@ incremental-select-command-history() {
 
 zle -N incremental-select-command-history
 
+# Recipi
+# bindkey '^[[A' incremental-select-command-history
+

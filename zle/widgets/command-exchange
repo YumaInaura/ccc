@@ -1,3 +1,5 @@
+# WIP
+
 if [ ! $(which zsh) ]; then echo "You need zsh" && exit 1; fi
 
 command_exchange () {
