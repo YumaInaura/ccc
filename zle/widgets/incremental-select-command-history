@@ -20,4 +20,3 @@ incremental-select-command-history() {
 
 zle -N incremental-select-command-history
 
-unset -f incremental-select-command-history 

@@ -6,5 +6,3 @@ peco-select-history-up() {
 
 zle -N peco-select-history-up
 
-unset -f peco-select-history-up
-
