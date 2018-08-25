@@ -18,6 +18,4 @@ incremental-select-command-history() {
    CURSOR=${#BUFFER}
 }
 
-zle -N incremental-select-command-history
-bindkey '^[[A' incremental-select-command-history
 
