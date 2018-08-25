@@ -6,3 +6,6 @@ peco-select-history-up() {
 
 zle -N peco-select-history-up
 
+# Recipi
+# bindkey '^R' peco-select-history-up
+
