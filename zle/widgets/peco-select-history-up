@@ -4,3 +4,5 @@ peco-select-history-up() {
     zle reset-prompt
 }
 
+zle -N peco-select-history-up
+

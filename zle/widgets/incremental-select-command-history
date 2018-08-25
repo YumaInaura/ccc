@@ -18,4 +18,5 @@ incremental-select-command-history() {
    CURSOR=${#BUFFER}
 }
 
+zle -N incremental-select-command-history
 
