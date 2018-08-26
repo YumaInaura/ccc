@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh -eu
 
+# !BROKEN!
+# This widget can up-history only recent two histories
 if [ ! $(which zsh) ]; then echo "You need zsh" && exit; fi
 
 up_refreshed_history() {
