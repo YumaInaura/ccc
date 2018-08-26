@@ -3,6 +3,8 @@ incremental-select-command-history() {
 
    local original_buffer="$BUFFER"
 
+   fc -R
+
    BUFFER=$( \
       history 1 | \
       sort -k1,1nr | \
