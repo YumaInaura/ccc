@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh -eu
+
 peco-select-history-up() {
   fc -R
 

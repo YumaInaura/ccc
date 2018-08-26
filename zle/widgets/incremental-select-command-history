@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh -eu
+
 incremental-select-command-history() {
    if [ ! $(which peco) ]; then echo "You need peco" && exit 1; fi
 
