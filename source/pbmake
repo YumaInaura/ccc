@@ -1,5 +1,0 @@
-function pbmake (){
-  echo Finish to Ctrl+D
-  cat | pbcopy
-  echo Copied. Try $ pbpaste
-}

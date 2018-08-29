@@ -1,5 +1,5 @@
-#!/usr/bin/env bash -eu
-
-source ./source/pbmake
-
-pbmake
+function pbmake (){
+  echo Finish to Ctrl+D
+  cat | pbcopy
+  echo Copied. Try $ pbpaste
+}
