@@ -4,10 +4,12 @@
 #
 # $ source this_script
 
-if [[ ! $(which pbcopy) ]]; then
-  echo you need pbcopy
-  exit
-fi
+pbcopy-lastcommand() {
+  if [[ ! $(which pbcopy) ]]; then
+    echo you need pbcopy
+    exit
+  fi
 
-history 0 | tail -n 1 | sed -e "s/^[0-9 ]*//g" | pbcopy
+  echo -n $(history 0 | tail -n 1 | sed -e "s/^[0-9 ]*//g") | pbcopy
+}
 
