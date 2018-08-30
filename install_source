@@ -5,6 +5,6 @@ for filepath in $(find ./lib -type f | grep -v -e '\.[a-z]*$'); do
   echo install "$filepath"
   echo "$function_name" as source
 
-  eval "function $function_name() { source $filepath; }"
+  eval "function $function_name() { source $filepath \$@; }"
 done
 
