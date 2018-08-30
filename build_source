@@ -1,3 +1,7 @@
+# Usage
+#
+# $ source this_script
+
 for filepath in $(find ./lib -type f | grep -v -e '\.[a-z]*$'); do
   filename=$(basename "$filepath")
   function_name=$(basename "$filepath")
