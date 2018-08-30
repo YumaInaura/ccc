@@ -5,11 +5,7 @@
 # $ source this_script
 
 pbcopy-lastcommand() {
-  if [[ ! $(which pbcopy) ]]; then
-    echo you need pbcopy
-    exit
-  fi
-
-  echo -n $(history 0 | tail -n 1 | sed -e "s/^[0-9 ]*//g") | pbcopy
+  # FIXME to absolute path
+  source "lib/"$(basename "$0")
 }
 
