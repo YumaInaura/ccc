@@ -7,7 +7,5 @@ for filepath in $(find ./lib -type f | grep -v -e '\.[a-z]*$'); do
   echo "==================================================="
 
   eval "function $function_name() { source $HOME/.pb4human/lib/$function_name \$@; }"
-  
   which "$function_name"
 done
-
