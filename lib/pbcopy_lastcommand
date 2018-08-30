@@ -3,10 +3,11 @@ if [[ ! $(which pbcopy) ]]; then
   exit
 fi
 
-if [ -z $(history 0) ]; then
-  # FIXME: does not work well
-  echo -n $(history | grep -v 'history' | tail -n 1 | sed -e 's/^[ 0-9]*//g')
+if [[ -z $(history 0) ]]; then
+  local history=$(history | grep -v 'history ' | tail -n 1 | sed -e 's/^[ 0-9]*//g')
+  if [[ "$@" =~ --test ]]; then echo [TEST] "$history"; fi
+  echo -n "$history" | /usr/bin/env pbcopy
 else
-  echo -n $(history 0 | tail -n 1 | sed -e "s/^[0-9 ]*//g") | pbcopy
+  echo -n $(history 0 | tail -n 1 | sed -e "s/^[0-9 ]*//g") | /usr/bin/env pbcopy
 fi
 
