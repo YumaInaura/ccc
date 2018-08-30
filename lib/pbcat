@@ -1,4 +1,2 @@
-function pbcat (){
-  echo -n $(cat "$1" | peco) | pbcopy && echo Copied: $(pbpaste)
-}
+echo -n $(cat "$1" | peco) | pbcopy && echo Copied: $(pbpaste)
 

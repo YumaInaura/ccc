@@ -1,9 +1,7 @@
-function pbvim (){
-  readonly pbvim_tmp_file=./.pbvim.tmp
+readonly pbvim_tmp_file=./.pbvim.tmp
 
-  pbpaste | vim - +"saveas $pbvim_tmp_file"
-  cat "$pbvim_tmp_file" | tr -d "\012"| pbcopy
+pbpaste | vim - +"saveas $pbvim_tmp_file"
+cat "$pbvim_tmp_file" | tr -d "\012"| pbcopy
 
-  rm -f "$pbvim_tmp_file"
-}
+rm -f "$pbvim_tmp_file"
 
