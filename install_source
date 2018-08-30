@@ -1,4 +1,4 @@
-for filepath in lib/pbvim; do
+for filepath in $(find ./lib -type f); do
   filename=$(basename "$filepath")
   function_name=$(basename "$filepath")
 
