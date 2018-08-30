@@ -1,10 +1,14 @@
+
 for filepath in $(find ./lib -type f | grep -v -e '\.[a-z]*$'); do
   filename=$(basename "$filepath")
   function_name=$(basename "$filepath")
 
-  echo install "$filepath"
-  echo "$function_name" as source
+  echo "==================================================="
+  echo build from "$filepath"
+  echo "==================================================="
 
-  eval "function $function_name() { source $filepath \$@; }"
+  eval "function $function_name() { source $HOME/.pb4human/lib/$function_name \$@; }"
+  
+  which "$function_name"
 done
 
