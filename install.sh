@@ -5,8 +5,10 @@ readonly lib_dir=$home_dir/lib
 
 mkdir -p "$home_dir"
 
-rm -rf "$home_dir/lib"
-cp -rf ./lib $home_dir
+# if [[ "$@" =~ -f ]]; then readonly f="f"; else readonly f=""; fi
+
+rm -rfv "$home_dir/lib"
+cp -rfv ./lib "$home_dir"
 
 echo ===========================================
 echo "Installed ( $lib_dir )"
