@@ -20,9 +20,8 @@ readonly selected_image_id=$(echo "$selected_line" | awk '{ print $3 }')
 
 if [[ -z "$selected_image_id" ]]; then
   echo Image not selected
-  exit
+else
+  echo "$selected_image_name : $selected_image_id" selected
+  docker rmi "$selected_image_id" "$@"; readonly docker_rmi_exit_code="$?"
 fi
-
-echo "$selected_image_name : $selected_image_id" selected
-docker rmi "$selected_image_id" "$@"; readonly docker_rmi_exit_code="$?"
 
