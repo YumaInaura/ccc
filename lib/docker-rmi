@@ -12,7 +12,7 @@
 #   ( Use `$ docker rmi` option )
 #
 
-readonly image_list=$(docker images -a | tail -n +2)
+readonly image_list=$(docker images | tail -n +2)
 readonly selected_line=$(echo "$image_list" | peco)
 
 readonly selected_image_name=$(echo "$selected_line" | awk '{ print $1 }')
