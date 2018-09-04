@@ -1,0 +1,26 @@
+#!/usr/bin/env bash -eu
+
+# Usuage
+#
+# $ eco docker rmi
+#
+
+readonly subcommand1="${1:-}"
+readonly subcommand2="${2:-}"
+
+readonly current_dir=$(echo "$0" | sed -e "s/\/$(basename "$0")$//g")
+
+if [[ -z "$subcommand1" ]]; then
+  ls -1 "$current_dir" | grep -v -e 'eco$' | sed 's/\-/ / ' | sed -E 's/[^0-9A-Za-z_ ]//g' | sed -E 's/^/\$ eco /'
+elif [[ -z "$subcommand2" ]]; then
+  ls -1 "$current_dir" | grep "$subcommand1-" | grep -v -E 'eco$' | sed 's/\-/ /' | sed -E 's/[^0-9A-Za-z_ ]//g' | sed -E 's/^/\$ eco /g'
+elif [[ ! -f "$current_dir"/"$subcommand1"-"$subcommand2" ]]; then
+  echo No command found
+elif [[ ! -z "$subcommand1" ]] && [[ ! -z "$subcommand2" ]]; then
+  eval "$current_dir"/"$subcommand1"-"$subcommand2"
+elif [[ ! -z "$subcommand1" ]]; then
+  eval "$current_dir"/"$subcommand1"
+else
+  echo No command
+fi
+
