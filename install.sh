@@ -1,22 +1,14 @@
 #!/usr/bin/env bash -eu
 
-readonly home_dir=$HOME/eco
-readonly lib_dir=$home_dir/lib
-
-mkdir -p "$home_dir"
-
 rm -rfv "$HOME/eco"
-cp -rfv ../eco "$HOME/eco"
+mkdir -p "$HOME/eco"
+
+cp -rfv ../eco/bin "$HOME/eco"
 
 echo ===========================================
-echo "Installed ( $lib_dir )"
+echo "Installed"
 echo ===========================================
-ls -la "$lib_dir"
-
+echo Add PATH in your profile file
 echo ===========================================
-echo Add build source line in your profile file
-echo ===========================================
-echo "# START eco #"
-echo 'source "$HOME"/eco/build_source'
-echo "# END eco #"
+echo 'export PATH=$HOME/eco/bin:$PATH'
 

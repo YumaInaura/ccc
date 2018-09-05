@@ -1,0 +1,4 @@
+#!/usr/bin/env bash -eu
+
+echo -n $(cat "$1" | peco) | pbcopy && pbpaste
+

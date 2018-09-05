@@ -1,3 +1,5 @@
+#!/usr/bin/env bash -eu
+
 readonly pbvim_tmp_file=./.pbvim.tmp
 
 pbpaste | vim - +"saveas $pbvim_tmp_file"
