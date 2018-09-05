@@ -1,0 +1,22 @@
+#!/usr/bin/env bash -eu
+
+# $ docker-rmi
+#
+# List docker ps and kill it
+#
+# Usage
+# 
+# $ docker-kill [ContainerID]
+# 
+
+readonly ps_list=$(docker ps | tail -n +2)
+readonly selected_line=$(echo "$ps_list" | peco)
+
+readonly selected_ps=$(echo "$selected_line" | awk '{ print $1 }')
+
+if [[ -z "$selected_line" ]]; then
+  echo not selected
+else
+  docker kill "$selected_ps" "$@"
+fi
+

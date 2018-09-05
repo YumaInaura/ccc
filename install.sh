@@ -1,6 +1,6 @@
 #!/usr/bin/env bash -eu
 
-rm -rfv "$HOME/eco"
+rm -rv "$HOME/eco"
 mkdir -p "$HOME/eco"
 
 cp -rfv ../eco/bin "$HOME/eco"
