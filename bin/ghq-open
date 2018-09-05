@@ -1,0 +1,7 @@
+#!/usr/bin/env bash -eu
+
+readonly remote_repository_web_url=$(ghq list | sed -e 's/^/https:\/\//g' | peco)
+
+echo "$remote_repository_web_url"
+open "$remote_repository_web_url"
+
