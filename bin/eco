@@ -6,6 +6,7 @@
 #
 
 readonly current_directory=$(echo "$0" | sed -e "s/\/$(basename "$0")$//g")
+readonly eco_home=${ECO_HOME:-"$HOME/eco"}
 
 commands=''
 options=''
@@ -32,6 +33,6 @@ if [[ -f "$script_full_path" ]]; then
   eval "$script_full_path" "$options"
 else
   echo "Command not found"
-  ls -1 "$current_directory/bin" | grep -v -e 'eco$' | sed 's/\-/ / ' | sed -E 's/[^0-9A-Za-z_ ]//g' | sed -E 's/^/\$ eco /'
+  ls -1 "$eco_home/bin" | grep -v -e 'eco$' | sed 's/\-/ / ' | sed -E 's/[^0-9A-Za-z_ ]//g' | sed -E 's/^/\$ eco /'
 fi
 
