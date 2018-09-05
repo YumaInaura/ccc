@@ -1,0 +1,13 @@
+#!/usr/bin/env bash -eu
+
+readonly eco_home=${ECO_HOME:-"$HOME/eco"}
+
+for file_path in $(find "$eco_home"/fbin -type f); do
+  file_name=$(basename "$file_path")
+
+  echo "file_path : $file_path"
+  echo "file_name : $file_name"
+
+  eval "function ${file_name}() { source ${file_path}; }"
+done
+
