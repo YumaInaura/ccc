@@ -17,6 +17,6 @@ echo ===========================================
 echo Add build source line in your profile file
 echo ===========================================
 echo "# START eco #"
-echo 'source $HOME/build_source'
+echo 'source "$HOME"/eco/build_source'
 echo "# END eco #"
 
