@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh -eu
+
+ghq-list() {
+  local ghq_selected=$(ghq list | peco)
+  cd $(ghq root)/"$ghq_selected"
+}
+
+
