@@ -1,0 +1,60 @@
+#!/usr/bin/env bash -eu
+
+readonly cat <<HELP
+Usage
+
+git grep and edit with $EDITOR
+When you use Vim then open related line number in file
+
+$ command [grep-keyword] --some-grep-option
+
+Options:
+
+--peco-option   specify peco option
+                  ( e.g --peco-option='layout-bottom' )
+
+HELP
+
+readonly editor=${EDITOR:-vim}
+
+if [ ! $(which peco) ]; then
+  echo You need peco please install
+  exit
+fi
+
+readonly git_grep_result=$(git grep --line-number "$1")
+
+if [ -z "$git_grep_result" ]; then
+  echo No match with git grep
+  exit
+fi
+
+peco_option=''
+editor_option=''
+for arg in "$@"; do
+  if [[ "$arg" =~ ^--peco-option=- ]]; then
+    peco_option=$(echo "$arg" | sed -e "s/^--peco-option=//g");
+  fi
+
+  if [[ "$arg" =~ ^--editor-option=- ]]; then
+    editor_option=$(echo "$arg" | sed -e "s/^--editor-option=//g");
+  fi
+done
+
+readonly git_grep_select=$(echo "$git_grep_result" | eval peco --query="$1" "$peco_option")
+
+if [ -z "$git_grep_select" ]; then
+  exit
+fi
+
+readonly filepath=$(echo "$git_grep_select" | awk -F':' '{ print $1 }')
+readonly line_number=$(echo "$git_grep_select" | awk -F':' '{ print $2 }')
+
+if [ ! -z "$filepath" ]; then
+  if [[ "$editor" =~ vim ]] && [ ! -z "$line_number" ]; then
+    eval "$editor" +"$line_number" "$filepath" "$editor_option"
+  else
+    eval "$editor" "$filepath" "$editor_option" 
+  fi
+fi
+
