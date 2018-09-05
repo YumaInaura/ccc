@@ -32,6 +32,6 @@ if [[ -f "$script_full_path" ]]; then
   eval "$script_full_path" "$options"
 else
   echo "Command not found"
-  ls -1 "$current_directory/bin" | grep -v -e 'eco$' | sed 's/\-/ / ' | sed -E 's/[^0-9A-Za-z_ ]//g' | sed -E 's/^/\$ eco /'
+  ls -1 "$current_directory" | grep -v -e 'eco$' | sed 's/\-/ / ' | sed -E 's/[^0-9A-Za-z_ ]//g' | sed -E 's/^/\$ eco /'
 fi
 
