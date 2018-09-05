@@ -1,6 +1,5 @@
-ghq-list() {
-  local ghq_selected=$(ghq list | peco)
-  cd $(ghq root)/"$ghq_selected"
-}
+#!/usr/bin/env bash -eu
 
+local ghq_selected=$(ghq list | peco)
+cd $(ghq root)/"$ghq_selected"
 
