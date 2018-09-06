@@ -35,18 +35,18 @@ fi
 if [[ -f "$script_full_path" ]]; then
   eval "$script_full_path" "$options"
 else
-  echo "$ $commands $options"
-  echo "command not found"
-
   part_of_command=$(echo "$@" | perl -pe 's/^\s*([a-z][a-z0-9]+)(.+?|$)/$1/g')
 
-  find "$eco_home/bin" | \
+  readonly command_list=$(find "$eco_home/bin" | \
     sed -E 's/bin(\/|$)/ / ' | \
     sed 's/\// /g' | \
     sed -E 's/[^0-9A-Za-z_ \/]//g' | \
     sed -E 's/^ +| +$//g' | \
     grep -e "^$part_of_command" | \
     sed -E 's/^/\$ eco /' | \
-    sed -E 's/ +/ /g'
+    sed -E 's/ +/ /g' \
+  )
+  
+  eval $(echo "$command_list" | peco | sed 's/\$//')
 fi
 
