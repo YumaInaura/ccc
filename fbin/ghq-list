@@ -1,8 +1,5 @@
-#!/usr/bin/env zsh -eu
+#!/usr/bin/env bash -eu
 
-ghq-list() {
-  local ghq_selected=$(ghq list | peco)
-  cd $(ghq root)/"$ghq_selected"
-}
-
+local ghq_selected=$(ghq list | peco)
+cd $(ghq root)/"$ghq_selected"
 
