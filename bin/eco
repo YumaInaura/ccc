@@ -5,7 +5,6 @@
 # $ eco docker rmi
 #
 
-# readonly current_directory=$(echo "$0" | sed -e "s/\/$(basename "$0")$//g")
 readonly eco_home=${ECO_HOME:-"$HOME/eco"}
 
 commands=''
