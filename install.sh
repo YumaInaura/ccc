@@ -2,8 +2,10 @@
 
 readonly eco_install_path=${ECO_INSTALL_PATH:-"$HOME/eco"}
 
+./build_bin
+
 if [[ ! -z "$eco_install_path" ]] && [[ ! "$eco_install_path" =~ /\//  ]]; then
-  rm -rv "$eco_install_path/"
+  rm -rfv "$eco_install_path/"
 fi
 
 mkdir -p "$eco_install_path/eco"
