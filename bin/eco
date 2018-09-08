@@ -46,6 +46,10 @@ else
     sed -E 's/^/\$ eco /' | \
     sed -E 's/ +/ /g' \
   )
+
+  if [[ -z "$command_list" ]];
+    then echo Command not found && exit;
+  fi
   
   eval $(echo "$command_list" | peco | sed 's/\$//')
 fi
