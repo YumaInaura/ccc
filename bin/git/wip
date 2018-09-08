@@ -1,4 +1,10 @@
 #!/usr/bin/env bash -eu
 
-git commit --allow-empty -m "$@"
+if [[ -z "$@" ]]; then
+  readonly message="WIP"
+else
+  readonly message="$@"
+fi
+
+git commit --allow-empty -m "$message"
 
