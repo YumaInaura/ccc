@@ -24,6 +24,24 @@ readonly file_name=$(basename "$0")
 readonly script_file_name=$(echo "$commands" | perl -pe 's/ +/\//g');
 readonly script_full_path="$eco_home/bin/$script_file_name"
 
+
+# part_of_command=$(echo "$@" | perl -pe 's/^\s*([a-z][a-z0-9]+)(.+?|$)/$1/g')
+#  grep -e "^$part_of_command" | \
+readonly command_list=$(find "$eco_home/bin" | \
+  sed -E 's/bin(\/|$)/ / ' | \
+  sed 's/\// /g' | \
+  sed -E 's/[^0-9A-Za-z_ \/]//g' | \
+  sed -E 's/^ +| +$//g' | \
+  sed -E 's/^/\$ eco /' | \
+  sed -E 's/ +/ /g' \
+)
+
+
+for arg in $@; do
+  if [[ "$arg" = "--list" ]]; then echo "$command_list" && exit; fi
+done
+
+
 if [[ "$@" =~ --dry ]]; then
   echo "**** Detail ****" 
   for name in eco_home commands options script_file_name script_full_path; do
@@ -34,17 +52,6 @@ fi
 if [[ -f "$script_full_path" ]]; then
   eval "$script_full_path" "$options"
 else
-  part_of_command=$(echo "$@" | perl -pe 's/^\s*([a-z][a-z0-9]+)(.+?|$)/$1/g')
-
-  readonly command_list=$(find "$eco_home/bin" | \
-    sed -E 's/bin(\/|$)/ / ' | \
-    sed 's/\// /g' | \
-    sed -E 's/[^0-9A-Za-z_ \/]//g' | \
-    sed -E 's/^ +| +$//g' | \
-    grep -e "^$part_of_command" | \
-    sed -E 's/^/\$ eco /' | \
-    sed -E 's/ +/ /g' \
-  )
 
   if [[ -z "$command_list" ]];
     then echo Command not found && exit;
