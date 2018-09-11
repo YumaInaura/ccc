@@ -1,0 +1,14 @@
+#!/usr/bin/env bash -eu
+
+# Usage
+#
+# $ command 
+#
+# $ command HEAD~3
+#
+
+readonly target=${1:-'HEAD^'}
+
+git diff --name-only "$target"
+
+
