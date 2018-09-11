@@ -1,0 +1,26 @@
+#!/usr/bin/env bash -eu
+
+readonly target=${1-'HEAD^'}
+
+readonly diff_files=$(git diff --name-only "$target")
+
+if [[ ! $(which peco) ]]; then
+  echo You need peco
+  exit 1
+fi
+
+if [[ -z "$diff_files" ]]; then
+  echo "No diff u1u"
+  exit 1
+else
+  readonly selected_file=$(echo "$diff_files" | peco)
+fi
+
+if [[ -z "$selected_file" ]]; then
+  echo "No file selected"
+  exit 1
+else
+  eval "$EDITOR" "$selected_file"
+fi
+
+
