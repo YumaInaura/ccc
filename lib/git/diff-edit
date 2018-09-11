@@ -1,6 +1,17 @@
 #!/usr/bin/env bash -eu
 
-readonly target=${1-'HEAD^'}
+# Usage
+#
+# $ command 
+#
+# $ command HEAD~3
+#
+# EDITOR=vim $ command 
+#
+
+readonly editor=${EDITOR:-vim}
+
+readonly target=${1:-'HEAD^'}
 
 readonly diff_files=$(git diff --name-only "$target")
 
@@ -22,5 +33,4 @@ if [[ -z "$selected_file" ]]; then
 else
   eval "$EDITOR" "$selected_file"
 fi
-
 
