@@ -1,0 +1,31 @@
+#!/usr/bin/env bash -eu
+
+# Usage
+#
+# $ command 
+#
+# $ command HEAD~3
+
+readonly diff_files=$(git-recent $@)
+
+if [[ ! $(which peco) ]]; then
+  echo You need peco
+  exit 1
+fi
+
+if [[ -z "$diff_files" ]]; then
+  echo "No diff found"
+  exit 1
+else
+  readonly selected_file=$(echo "$diff_files" | peco)
+fi
+
+if [[ -z "$selected_file" ]]; then
+  echo "No file selected"
+  exit 1
+fi
+
+echo "$selected_file"
+
+exit
+
