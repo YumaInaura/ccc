@@ -10,7 +10,7 @@ if [[ ! $(which peco) ]]; then
 fi
 
 if [[ -z "$diff_files" ]]; then
-  echo "No diff u1u"
+  echo "No diff found"
   exit 1
 else
   readonly selected_file=$(echo "$diff_files" | peco)
