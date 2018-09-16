@@ -5,14 +5,24 @@
 # $ eco docker rmi
 #
 
-_eco_path() {
+_eco_path () {
   local eco_path=${ECO_HOME:-"$HOME/eco"}
   echo "$eco_path"
+}
+
+
+_eco_list (){
+  for file in $(find  "$(_eco_path)/bin" ); do
+    basename "$file" | sed -E 's/[^0-9A-Za-z_ \/]//g' | sed -E 's/-/ /g'
+  done
 }
 
 for arg in $@; do
   if [[ "$arg" == '--path' ]]; then
     _eco_path
+    return
+  elif [[ "$arg" == '--list' ]]; then
+    _eco_list
     return
   fi
 done
@@ -49,15 +59,7 @@ _eco () {
   )
   
   
-  for arg in $@; do
-    if [[ "$arg" = "--list" ]]; then
-      for file in $(find  "$(_eco_path)/bin" ); do
-        basename "$file" | sed -E 's/[^0-9A-Za-z_ \/]//g' | sed -E 's/-/ /g'
-      done
-      exit
-    fi
-  done
-  
+ 
   if [[ "$@" =~ --dry ]]; then
     echo "**** Detail ****" 
     for name in commands options script_file_name script_full_path; do
