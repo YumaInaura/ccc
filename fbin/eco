@@ -5,9 +5,50 @@
 # $ eco docker rmi
 #
 
+_eco_prepare() {
+  if [[ ! -z "${BASH_SOURCE[0]}" ]]; then
+    shopt -s expand_aliases
+    alias return=exit
+  fi
+}
+
+_eco_prepare
+
+_eco_path () {
+  local eco_path=${ECO_HOME:-"$HOME/eco"}
+  echo "$eco_path"
+}
+
+_eco_list () {
+  for file in $(find  "$(_eco_path)/bin" ); do
+    basename "$file" | sed -E 's/[^0-9A-Za-z_ \/]//g' | sed -E 's/-/ /g'
+  done
+}
+
+_eco_commands() {
+  find $(_eco_path)/bin \
+    -exec sh -c 'basename {}' \; | \
+    sed -E 's/[^0-9A-Za-z-]//g' | \
+    sed -E 's/-/ /g' | \
+    grep -v -E ^bin$ | \
+    sed -E 's/^/\$ eco /' 
+ }
+
+for arg in $@; do
+  if [[ "$arg" == '--path' ]]; then
+    _eco_path
+    return
+  elif [[ "$arg" == '--list' ]]; then
+    _eco_list
+    return
+  elif [[ "$arg" == '--commands' ]]; then
+    _eco_commands
+    return
+  fi
+done
+
 _eco () {
-  local eco_home=${ECO_HOME:-"$HOME/eco"}
-  
+
   local commands=''
   local options=''
   
@@ -23,33 +64,15 @@ _eco () {
   
   local file_name=$(basename "$0")
   local script_file_name=$(echo "$commands" | perl -pe 's/ +/\//g');
-  local script_full_path="$eco_home/bin/$script_file_name"
+  local script_full_path="$(_eco_path)/bin/$script_file_name"
   
   
   # part_of_command=$(echo "$@" | perl -pe 's/^\s*([a-z][a-z0-9]+)(.+?|$)/$1/g')
   #  grep -e "^$part_of_command" | \
-  local command_list=$(find "$eco_home/bin" | \
-    sed -E 's/bin(\/|$)/ / ' | \
-    sed 's/\// /g' | \
-    sed -E 's/[^0-9A-Za-z_ \/]//g' | \
-    sed -E 's/^ +| +$//g' | \
-    sed -E 's/^/\$ eco /' | \
-    sed -E 's/ +/ /g' \
-  )
-  
-  
-  for arg in $@; do
-    if [[ "$arg" = "--list" ]]; then
-      for file in $(find  "$eco_home/bin" ); do
-        basename "$file" | sed -E 's/[^0-9A-Za-z_ \/]//g' | sed -E 's/-/ /g'
-      done
-      exit
-    fi
-  done
-  
+ 
   if [[ "$@" =~ --dry ]]; then
     echo "**** Detail ****" 
-    for name in eco_home commands options script_file_name script_full_path; do
+    for name in commands options script_file_name script_full_path; do
       echo "$name" $(eval echo '$'"$name")
     done
   fi
@@ -58,11 +81,11 @@ _eco () {
     eval "$script_full_path" "$options"
   else
   
-    if [[ -z "$command_list" ]];
-      then echo Command not found && exit;
+    if [[ -z "$(_eco_commands)" ]];
+      then echo Command not found && return
     fi
     
-    eval $(echo "$command_list" | peco | sed 's/\$//')
+    eval $(echo "$(_eco_commands)" | peco | sed 's/\$//')
   fi
 
 }
