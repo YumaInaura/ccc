@@ -39,10 +39,12 @@ for arg in $@; do
 done
 
 _eco () {
-  local script_file_name=$(echo $1 | sed -E 's/ /-/g')
-  local script_full_path="$(_eco_path)/bin/$script_file__name"
- 
-  if [[ -z "$1" ]]; then
+  local commands=${@:1} 
+
+  local script_file_name=$(echo "$commands" | sed -E 's/ /-/g')
+  local script_full_path="$(_eco_path)/bin/$script_file_name"
+
+  if [[ ! -z "$1" ]]; then
     eval "$script_full_path"
     return
   else
