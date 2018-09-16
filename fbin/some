@@ -1,0 +1,18 @@
+#!/usr/bin/env bash -eu
+
+if [[ -z "$@" ]]; then
+  echo "Please tell me some path"
+  exit
+fi
+
+echo "command ? ___ $@"
+
+read command
+
+if [[ ! $(which $command) ]]; then
+  echo "$command command not found"
+  exit
+fi
+
+eval "$command $@"
+
