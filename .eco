@@ -6,9 +6,6 @@ export PATH=$HOME/eco/bin:$PATH
 for file_path in $(find "$eco_home"/fbin -type f); do
   file_name=$(basename "$file_path")
 
-  # echo "file_path : $file_path"
-  # echo "file_name : $file_name"
-
   eval "function ${file_name}() { source ${file_path}; }"
 done
 
