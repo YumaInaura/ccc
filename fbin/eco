@@ -20,11 +20,21 @@ _eco_path () {
 }
 
 
-_eco_list (){
+_eco_list () {
   for file in $(find  "$(_eco_path)/bin" ); do
     basename "$file" | sed -E 's/[^0-9A-Za-z_ \/]//g' | sed -E 's/-/ /g'
   done
 }
+
+_eco_commands() {
+  find "$(_eco_path)/bin" | \
+    sed -E 's/bin(\/|$)/ / ' | \
+    sed 's/\// /g' | \
+    sed -E 's/[^0-9A-Za-z_ \/]//g' | \
+    sed -E 's/^ +| +$//g' | \
+    sed -E 's/^/\$ eco /' | \
+    sed -E 's/ +/ /g' \
+ }
 
 for arg in $@; do
   if [[ "$arg" == '--path' ]]; then
@@ -32,6 +42,9 @@ for arg in $@; do
     return
   elif [[ "$arg" == '--list' ]]; then
     _eco_list
+    return
+  elif [[ "$arg" == '--commands' ]]; then
+    _eco_commands
     return
   fi
 done
@@ -58,16 +71,6 @@ _eco () {
   
   # part_of_command=$(echo "$@" | perl -pe 's/^\s*([a-z][a-z0-9]+)(.+?|$)/$1/g')
   #  grep -e "^$part_of_command" | \
-  local command_list=$(find "$(_eco_path)/bin" | \
-    sed -E 's/bin(\/|$)/ / ' | \
-    sed 's/\// /g' | \
-    sed -E 's/[^0-9A-Za-z_ \/]//g' | \
-    sed -E 's/^ +| +$//g' | \
-    sed -E 's/^/\$ eco /' | \
-    sed -E 's/ +/ /g' \
-  )
-  
-  
  
   if [[ "$@" =~ --dry ]]; then
     echo "**** Detail ****" 
@@ -80,11 +83,11 @@ _eco () {
     eval "$script_full_path" "$options"
   else
   
-    if [[ -z "$command_list" ]];
+    if [[ -z "$(_commands)" ]];
       then echo Command not found && exit;
     fi
     
-    eval $(echo "$command_list" | peco | sed 's/\$//')
+    eval $(echo "$(_commands)" | peco | sed 's/\$//')
   fi
 
 }
