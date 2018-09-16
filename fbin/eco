@@ -19,7 +19,6 @@ _eco_path () {
   echo "$eco_path"
 }
 
-
 _eco_list () {
   for file in $(find  "$(_eco_path)/bin" ); do
     basename "$file" | sed -E 's/[^0-9A-Za-z_ \/]//g' | sed -E 's/-/ /g'
@@ -27,13 +26,12 @@ _eco_list () {
 }
 
 _eco_commands() {
-  find "$(_eco_path)/bin" | \
-    sed -E 's/bin(\/|$)/ / ' | \
-    sed 's/\// /g' | \
-    sed -E 's/[^0-9A-Za-z_ \/]//g' | \
-    sed -E 's/^ +| +$//g' | \
-    sed -E 's/^/\$ eco /' | \
-    sed -E 's/ +/ /g' \
+  find $(_eco_path)/bin \
+    -exec sh -c 'basename {}' \; | \
+    sed -E 's/[^0-9A-Za-z-]//g' | \
+    sed -E 's/-/ /g' | \
+    grep -v -E ^bin$ | \
+    sed -E 's/^/\$ eco /' 
  }
 
 for arg in $@; do
@@ -83,11 +81,11 @@ _eco () {
     eval "$script_full_path" "$options"
   else
   
-    if [[ -z "$(_commands)" ]];
-      then echo Command not found && exit;
+    if [[ -z "$(_eco_commands)" ]];
+      then echo Command not found && return
     fi
     
-    eval $(echo "$(_commands)" | peco | sed 's/\$//')
+    eval $(echo "$(_eco_commands)" | peco | sed 's/\$//')
   fi
 
 }
