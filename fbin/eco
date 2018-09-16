@@ -5,15 +5,6 @@
 # $ eco docker rmi
 #
 
-_eco_prepare() {
-  if [[ ! -z "${BASH_SOURCE[0]}" ]]; then
-    shopt -s expand_aliases
-    alias return=exit
-  fi
-}
-
-_eco_prepare
-
 _eco_path () {
   local eco_path=${ECO_HOME:-"$HOME/eco"}
   echo "$eco_path"
