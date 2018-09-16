@@ -42,7 +42,7 @@ _eco () {
   local script_file_name=$(echo $1 | sed -E 's/ /-/g')
   local script_full_path="$(_eco_path)/bin/$script_file__name"
  
-  if [[ -f "$script_full_path" ]]; then
+  if [[ -z "$1" ]]; then
     eval "$script_full_path"
     return
   else
@@ -54,6 +54,4 @@ _eco () {
   fi
 }
 
-
 _eco $@
-
