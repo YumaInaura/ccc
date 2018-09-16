@@ -39,36 +39,19 @@ for arg in $@; do
 done
 
 _eco () {
-
-  local commands=''
-  local options=''
-  
-  for arg in $@; do
-    # Start with alphabet is command
-    if [[ "$arg" =~ ^[a-z] ]]; then commands="$commands $arg"; fi
-    # Start with hyphen is option
-    if [[ "$arg" =~ ^- ]]; then options="$options $arg"; fi
-  done
-  
-  commands=$(echo $commands | perl -pe 's/^ //')
-  options=$(echo $options | perl -pe 's/^ //')
-  
-  local file_name=$(basename "$0")
-  local script_file_name=$(echo "$commands" | perl -pe 's/ +/\//g');
-  local script_full_path="$(_eco_path)/bin/$script_file_name"
-  
+  local script_file_name=$(echo $1 | sed -E 's/ /-/g')
+  local script_full_path="$(_eco_path)/bin/$script_file__name"
  
   if [[ -f "$script_full_path" ]]; then
-    eval "$script_full_path" "$options"
+    eval "$script_full_path"
+    return
   else
-  
     if [[ -z "$(_eco_commands)" ]];
       then echo Command not found && return
     fi
     
     eval $(echo "$(_eco_commands)" | peco | sed 's/\$//')
   fi
-
 }
 
 
