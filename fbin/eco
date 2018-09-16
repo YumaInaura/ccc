@@ -1,0 +1,72 @@
+#!/usr/bin/env bash -eu
+
+# Usuage
+#
+# $ eco docker rmi
+#
+
+_eco () {
+  local eco_home=${ECO_HOME:-"$HOME/eco"}
+  
+  local commands=''
+  local options=''
+  
+  for arg in $@; do
+    # Start with alphabet is command
+    if [[ "$arg" =~ ^[a-z] ]]; then commands="$commands $arg"; fi
+    # Start with hyphen is option
+    if [[ "$arg" =~ ^- ]]; then options="$options $arg"; fi
+  done
+  
+  commands=$(echo $commands | perl -pe 's/^ //')
+  options=$(echo $options | perl -pe 's/^ //')
+  
+  local file_name=$(basename "$0")
+  local script_file_name=$(echo "$commands" | perl -pe 's/ +/\//g');
+  local script_full_path="$eco_home/bin/$script_file_name"
+  
+  
+  # part_of_command=$(echo "$@" | perl -pe 's/^\s*([a-z][a-z0-9]+)(.+?|$)/$1/g')
+  #  grep -e "^$part_of_command" | \
+  local command_list=$(find "$eco_home/bin" | \
+    sed -E 's/bin(\/|$)/ / ' | \
+    sed 's/\// /g' | \
+    sed -E 's/[^0-9A-Za-z_ \/]//g' | \
+    sed -E 's/^ +| +$//g' | \
+    sed -E 's/^/\$ eco /' | \
+    sed -E 's/ +/ /g' \
+  )
+  
+  
+  for arg in $@; do
+    if [[ "$arg" = "--list" ]]; then
+      for file in $(find  "$eco_home/bin" ); do
+        basename "$file" | sed -E 's/[^0-9A-Za-z_ \/]//g' | sed -E 's/-/ /g'
+      done
+      exit
+    fi
+  done
+  
+  if [[ "$@" =~ --dry ]]; then
+    echo "**** Detail ****" 
+    for name in eco_home commands options script_file_name script_full_path; do
+      echo "$name" $(eval echo '$'"$name")
+    done
+  fi
+  
+  if [[ -f "$script_full_path" ]]; then
+    eval "$script_full_path" "$options"
+  else
+  
+    if [[ -z "$command_list" ]];
+      then echo Command not found && exit;
+    fi
+    
+    eval $(echo "$command_list" | peco | sed 's/\$//')
+  fi
+
+}
+
+
+_eco $@
+
