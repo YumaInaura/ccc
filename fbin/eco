@@ -5,9 +5,13 @@
 # $ eco docker rmi
 #
 
-_eco () {
+_eco_home() {
   local eco_home=${ECO_HOME:-"$HOME/eco"}
-  
+  echo "$eco_home"
+}
+
+_eco () {
+
   local commands=''
   local options=''
   
@@ -23,12 +27,12 @@ _eco () {
   
   local file_name=$(basename "$0")
   local script_file_name=$(echo "$commands" | perl -pe 's/ +/\//g');
-  local script_full_path="$eco_home/bin/$script_file_name"
+  local script_full_path="$(_eco_home)/bin/$script_file_name"
   
   
   # part_of_command=$(echo "$@" | perl -pe 's/^\s*([a-z][a-z0-9]+)(.+?|$)/$1/g')
   #  grep -e "^$part_of_command" | \
-  local command_list=$(find "$eco_home/bin" | \
+  local command_list=$(find "$(_eco_home)/bin" | \
     sed -E 's/bin(\/|$)/ / ' | \
     sed 's/\// /g' | \
     sed -E 's/[^0-9A-Za-z_ \/]//g' | \
@@ -40,7 +44,7 @@ _eco () {
   
   for arg in $@; do
     if [[ "$arg" = "--list" ]]; then
-      for file in $(find  "$eco_home/bin" ); do
+      for file in $(find  "$(_eco_home)/bin" ); do
         basename "$file" | sed -E 's/[^0-9A-Za-z_ \/]//g' | sed -E 's/-/ /g'
       done
       exit
@@ -49,7 +53,7 @@ _eco () {
   
   if [[ "$@" =~ --dry ]]; then
     echo "**** Detail ****" 
-    for name in eco_home commands options script_file_name script_full_path; do
+    for name in commands options script_file_name script_full_path; do
       echo "$name" $(eval echo '$'"$name")
     done
   fi
