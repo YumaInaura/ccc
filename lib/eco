@@ -38,9 +38,13 @@ readonly command_list=$(find "$eco_home/bin" | \
 
 
 for arg in $@; do
-  if [[ "$arg" = "--list" ]]; then echo "$command_list" && exit; fi
+  if [[ "$arg" = "--list" ]]; then
+    for file in $(find  "$eco_home/bin" ); do
+      basename "$file" | sed -E 's/[^0-9A-Za-z_ \/]//g' | sed -E 's/-/ /g'
+    done
+    exit
+  fi
 done
-
 
 if [[ "$@" =~ --dry ]]; then
   echo "**** Detail ****" 
