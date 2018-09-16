@@ -21,7 +21,7 @@ _eco_path () {
 
 _eco_list () {
   for file in $(find  "$(_eco_path)/bin" ); do
-    basename "$file" | sed -E 's/[^0-9A-Za-z_ \/]//g' | sed -E 's/-/ /g'
+    basename "$file" | sed -E 's/-/ /g'
   done
 }
 
