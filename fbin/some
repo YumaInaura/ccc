@@ -1,23 +1,22 @@
 #!/usr/bin/env bash -eu
 
-if [[ ! -z "${BASH_SOURCE[0]}" ]]; then
-  shopt -s expand_aliases
-  alias return=exit
-fi
+_some() {
+  if [[ -z "$@" ]]; then
+    echo "Please tell me some path"
+    return
+  fi
+  
+  echo "command ? ___ $@"
+  
+  read command
+  
+  if [[ ! $(which $command) ]]; then
+    echo "$command command not found"
+    return
+  fi
+  
+  eval "$command $@"
+}
 
-if [[ -z "$@" ]]; then
-  echo "Please tell me some path"
-  return
-fi
-
-echo "command ? ___ $@"
-
-read command
-
-if [[ ! $(which $command) ]]; then
-  echo "$command command not found"
-  return
-fi
-
-eval "$command $@"
+_some $@
 
