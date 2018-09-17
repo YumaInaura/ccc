@@ -22,7 +22,15 @@ if [ ! $(which peco) ]; then
   exit
 fi
 
-readonly git_grep_result=$(git grep --line-number "$1")
+readonly keyword=${1:-}
+
+if [[ -z "$keyword" ]]; then
+  echo "Please tell me grep keyword"
+  exit
+fi
+
+
+readonly git_grep_result=$(git grep --line-number "$keyword")
 
 if [ -z "$git_grep_result" ]; then
   echo No match with git grep
